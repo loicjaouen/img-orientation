@@ -1,0 +1,72 @@
+<!doctype html>
+    <head>
+        <meta charset="utf-8">
+        <title>image with EXIF orientation demo</title>
+
+        <!-- basic styles to reduce images' size -->
+        <style>
+            .image {
+                height: 10em;
+            }
+        </style>
+    </head>
+
+    <body>
+        <p>Demonstrates that the <pre>&lt;img&gt;</pre> doesn't read the image orientation EXIF meta-tag unless told so by css</p>
+
+        <hr>
+
+        <!-- put a button to toggle the css orientation property -->
+
+        <input id="orientation" type="checkbox">toggle css orientation property to <strong>from-file</strong></input>
+
+        <hr>
+
+        <!-- include images -->
+
+        <ul>
+            <li>local image without meta-data orientation: <br/>
+                <img class="image" src="img/tree-orientation-none.jpg"
+                     alt="local image without orientation meta-data"/>
+
+            </li>
+            <li>local image with meta-data orientation: <br/>
+                <img class="image" src="img/tree-orientation-6.jpg"
+                     alt="local image with orientation meta-data"/>
+            </li>
+            <li>locally served image with meta-data orientation: <br/>
+                <img class="image" src="http://localhost:8080/img/tree-orientation-6.jpg"
+                     alt="locally served image with orientation meta-data"/>
+            </li>
+            <li>sipi image with meta-data orientation: <br/>
+                <img class="image" src="http://sipi-demo.unil.ch/knora/EE8XhsWVNCj-Dfu3AzReajj.jpx/full/816,612/0/default.jpg"
+                     alt="sipi image with orientation meta-data from sipi"/>
+            </li>
+        </ul>
+
+        <hr>
+
+        <p>Exif edited with: <a href="https://www.imgonline.com.ua/">imgonline.com.ua</a></p>
+
+        <!-- script to listen to the above button and change the image style -->
+
+        <script>
+            var imageOrientation = document.getElementById("orientation");
+            imageOrientation.addEventListener("change", function (evt) {
+                var elements = document.getElementsByClassName('image');
+                for (var i in elements) {
+                    <!-- thin out the dom part that are not images -->
+                    if (elements.hasOwnProperty(i)) {
+                        if (evt.target.checked) {
+                            <!-- if the button is checked, change the orientation to "from-file" -->
+                            elements[i].style.imageOrientation = 'from-image';
+                        } else {
+                            <!-- else put it to "unset" -->
+                            elements[i].style.imageOrientation = 'unset';
+                        }
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>
